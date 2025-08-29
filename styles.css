@@ -1,8 +1,82 @@
-body { font-family: system-ui, Arial; background:#f7f7fb; color:#111; display:flex; justify-content:center; padding:20px; }
-#app { width:100%; max-width:720px; background:white; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.08); padding:16px; }
-#messages { height: 50vh; overflow:auto; border:1px solid #eee; padding:8px; margin-bottom:8px; background:#fff; }
-.msg { margin:6px 0; }
-.msg.system { color:#666; font-style:italic; }
-.msg .ts { color:#999; font-size:0.8em; margin-left:6px;}
-#msgForm { display:flex; gap:8px; }
-#msgInput { flex:1; padding:8px; }
+body {
+  font-family: system-ui, Arial;
+  background: #f7f7fb;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  margin: 0;
+}
+
+#app {
+  width: 100%;
+  max-width: 720px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 80vh; /* take more vertical space */
+}
+
+#messages {
+  flex: 1; /* grow to fill available space */
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.msg {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.msg.system {
+  color: #666;
+  font-style: italic;
+}
+
+.msg.user b {
+  color: #4caf50;
+}
+
+.msg .ts {
+  color: #999;
+  font-size: 0.75em;
+  margin-left: 6px;
+}
+
+#msgForm {
+  display: flex;
+  gap: 8px;
+}
+
+#msgInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+#msgForm button, #leaveBtn, #joinBtn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
