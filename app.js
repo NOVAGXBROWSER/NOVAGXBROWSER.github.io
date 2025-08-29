@@ -1,10 +1,8 @@
 const joinBtn = document.getElementById("joinBtn");
 const usernameInput = document.getElementById("username");
-const roomInput = document.getElementById("room");
 const loginDiv = document.getElementById("login");
 const chatDiv = document.getElementById("chat");
 const youLabel = document.getElementById("you");
-const roomLabel = document.getElementById("roomName");
 const messagesDiv = document.getElementById("messages");
 const msgForm = document.getElementById("msgForm");
 const msgInput = document.getElementById("msgInput");
@@ -12,24 +10,8 @@ const leaveBtn = document.getElementById("leaveBtn");
 
 let ws = null;
 let username = null;
-let room = null;
 
-// Point to your Render backend
-let BACKEND_WS_BASE = "wss://relink-backend1.onrender.com/ws";
-
-const userColors = {};
-function getColor(username) {
-  if (!userColors[username]) {
-    const hue = Math.floor(Math.random() * 360);
-    userColors[username] = `hsl(${hue}, 70%, 50%)`;
-  }
-  return userColors[username];
-}
-
-function escapeHtml(s) {
-  if (!s) return "";
-  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#039;"}[c]));
-}
+let BACKEND_WS_BASE = window.RELINK_WS_URL || "wss://YOUR_BACKEND_HOST/ws";
 
 function addMessage(item) {
   const el = document.createElement("div");
@@ -37,31 +19,33 @@ function addMessage(item) {
   if (item.type === "system") {
     el.textContent = `[${new Date(item.ts).toLocaleTimeString()}] ${item.text}`;
   } else {
-    el.innerHTML = `<b style="color:${getColor(item.actor)}">${escapeHtml(item.actor)}</b>: ${escapeHtml(item.text)} <span class="ts">${new Date(item.ts).toLocaleTimeString()}</span>`;
+    el.innerHTML = `<b>${escapeHtml(item.actor)}</b>: ${escapeHtml(item.text)} <span class="ts">${new Date(item.ts).toLocaleTimeString()}</span>`;
   }
   messagesDiv.appendChild(el);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
+function escapeHtml(s) {
+  if (!s) return "";
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#039;"}[c]));
+}
+
 joinBtn.addEventListener("click", () => {
   username = usernameInput.value.trim();
-  room = roomInput.value.trim();
-  if (!username || !room) {
-    alert("Enter a username and room name");
+  if (!username) {
+    alert("Enter a username");
     return;
   }
   youLabel.textContent = `You: ${username}`;
-  roomLabel.textContent = `Room: ${room}`;
   loginDiv.style.display = "none";
-  chatDiv.style.display = "flex";
+  chatDiv.style.display = "block";
   connectWS();
 });
 
 leaveBtn.addEventListener("click", () => {
   if (ws) ws.close();
   chatDiv.style.display = "none";
-  loginDiv.style.display = "flex";
-  messagesDiv.innerHTML = "";
+  loginDiv.style.display = "block";
 });
 
 msgForm.addEventListener("submit", (e) => {
@@ -73,7 +57,7 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 function connectWS() {
-  const wsUrl = `${BACKEND_WS_BASE}/${encodeURIComponent(room)}/${encodeURIComponent(username)}`;
+  const wsUrl = `${BACKEND_WS_BASE}/${encodeURIComponent(username)}`;
   ws = new WebSocket(wsUrl);
 
   ws.onopen = () => {
@@ -87,7 +71,7 @@ function connectWS() {
       addMessage({type:"system", text: ev.data, ts:new Date().toISOString()});
     }
   };
-  ws.onclose = () => {
+  ws.onclose = (ev) => {
     addMessage({type:"system", text:"Disconnected from server", ts:new Date().toISOString()});
   };
   ws.onerror = (err) => {
