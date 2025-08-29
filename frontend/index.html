@@ -1,27 +1,31 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RELINK Chat</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
+    <!-- Login screen -->
     <div id="login">
-      <h1>RELINK</h1>
-      <input id="username" placeholder="Enter a username" maxlength="32" />
-      <button id="joinBtn">Join Chat</button>
+      <h2>Join RELINK</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="text" id="room" placeholder="Room">
+      <button id="joinBtn">Join</button>
     </div>
 
-    <div id="chat" style="display:none">
+    <!-- Chat screen -->
+    <div id="chat" style="display:none;">
       <div id="header">
+        <span id="roomName"></span>
         <span id="you"></span>
         <button id="leaveBtn">Leave</button>
       </div>
-      <div id="messages" role="log" aria-live="polite"></div>
+      <div id="messages"></div>
       <form id="msgForm">
-        <input id="msgInput" autocomplete="off" placeholder="Message..." />
+        <input type="text" id="msgInput" placeholder="Type a message...">
         <button type="submit">Send</button>
       </form>
     </div>
