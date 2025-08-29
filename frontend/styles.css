@@ -1,8 +1,0 @@
-body { font-family: system-ui, Arial; background:#f7f7fb; color:#111; display:flex; justify-content:center; padding:20px; }
-#app { width:100%; max-width:720px; background:white; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.08); padding:16px; }
-#messages { height: 50vh; overflow:auto; border:1px solid #eee; padding:8px; margin-bottom:8px; background:#fff; }
-.msg { margin:6px 0; }
-.msg.system { color:#666; font-style:italic; }
-.msg .ts { color:#999; font-size:0.8em; margin-left:6px;}
-#msgForm { display:flex; gap:8px; }
-#msgInput { flex:1; padding:8px; }
