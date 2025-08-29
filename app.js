@@ -11,7 +11,7 @@ const leaveBtn = document.getElementById("leaveBtn");
 let ws = null;
 let username = null;
 
-let BACKEND_WS_BASE = window.RELINK_WS_URL || "wss://YOUR_BACKEND_HOST/ws";
+let BACKEND_WS_BASE = "wss://relink-backend1.onrender.com/ws";
 
 function addMessage(item) {
   const el = document.createElement("div");
